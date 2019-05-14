@@ -7,7 +7,7 @@ REQUIRED_PACKAGES = [
 
 setup(
     name='kharita',
-    version='0.1',
+    version='0.2',
     packages=['kharita'],
     install_requires=REQUIRED_PACKAGES,
     url='',

@@ -12,6 +12,7 @@ import networkx as nx
 from scipy.spatial import cKDTree
 import pickle
 import pandas as pd
+from tqdm import tqdm
 
 from kharita.methods import create_trajectories, diffangles, partition_edge, \
     vector_direction_re_north, Cluster
@@ -62,8 +63,7 @@ def reconstruct_road(input_data: pd.DataFrame,
     trajectories = create_trajectories(input_data,
                                        waiting_threshold=waiting_threshold)
 
-    for i, trajectory in enumerate(trajectories[:-1]):
-        logging.info('\rprocessing trajectory: %s / %s' % (i, len(trajectories)))
+    for i, trajectory in enumerate(tqdm(trajectories[:-1])):
         update_cluster_index = False
         prev_cluster = -1
         for point in trajectory:
@@ -178,4 +178,4 @@ def reconstruct_road(input_data: pd.DataFrame,
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
-    print(reconstruct_road(pd.read_csv('../data/data_for_kharita.csv')))
+    print(reconstruct_road(pd.read_csv('../data_fixed.csv')))
