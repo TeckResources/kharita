@@ -14,7 +14,7 @@ class GpsPoint:
 	def __init__(self, vehicule_id=None, lon=None, lat=None, speed=None, timestamp=None, angle=None):
 			self.vehicule_id = int(vehicule_id) if vehicule_id != None else 0
 			self.speed = float(speed) if speed != None else 0.0
-			self.timestamp = datetime.datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S') if timestamp !=None else 0
+			self.timestamp = datetime.datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S+00:00') if timestamp !=None else 0
 			self.lon = float(lon)
 			self.lat = float(lat)
 			self.angle = float(angle)
@@ -211,7 +211,7 @@ def partition_edge(edge, distance_interval):
 	time_increment = delta_time / (int(initial_dist) / distance_interval)
 	for i in range(int(initial_dist) // distance_interval):
 		new_point = geopy.Point(d.destination(point=last_point, bearing=bearing))
-		str_timestamp = datetime.datetime.strftime(edge[0].last_seen + datetime.timedelta(seconds=time_increment), "%Y-%m-%d %H:%M:%S")
+		str_timestamp = datetime.datetime.strftime(edge[0].last_seen + datetime.timedelta(seconds=time_increment), "%Y-%m-%d %H:%M:%S+00:00")
 		holes.append(GpsPoint(lat=new_point.latitude, lon=new_point.longitude, angle=bearing,
 		                      timestamp=str_timestamp))
 		last_point = new_point
